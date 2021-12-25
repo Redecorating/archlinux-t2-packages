@@ -1,0 +1,93 @@
+name: Build packages
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Fetch WiFi Firmware
+      run: |
+        sudo apt install qemu
+        wget https://github.com/kholia/OSX-KVM/archive/${OSX-KVM_COMMIT_SHA}.zip
+        unzip ${OSX-KVM_COMMIT_SHA}.zip
+        cd OSX-KVM-${OSX-KVM_COMMIT_SHA}/scripts/monterey
+        make Monterey-recovery.dmg
+        shasum -a 512 Monterey-recovery.dmg
+        sudo losetup -P loop50 Monterey-recovery.dmg
+        mkdir mnt
+        sudo mount /dev/loop50p2 mnt
+        cd mnt/usr/share/firmware/wifi
+        tar cf ${{ github.workspace }}/wifi-fw/firmware-source.tar */*
+        cd ${{ github.workspace }}
+        # don't want to build a package in this folder
+        # TODO: unzip it somewhere else instead
+        rm -r OSX-KVM-${OSX-KVM_COMMIT_SHA}
+      env:
+        OSX-KVM_COMMIT_SHA: "88154b5bac079473660afc2a89704874cc7edf03"
+
+    - name: Build packages
+      run: |
+        cat << EOF > entrypoint.sh
+        cd /build
+        echo '[mbp]
+        Server = https://dl.t2linux.org/archlinux/\$repo/\$arch' >> /etc/pacman.conf
+        pacman-key --init
+        curl -o key.asc https://dl.t2linux.org/archlinux/key.asc
+        pacman-key --add key.asc
+        pacman-key --lsign 7F9B8FC29F78B339
+        useradd builduser -m
+        passwd -d builduser
+        pacman -Syu --noconfirm --needed sudo base-devel linux-mbp linux-mbp-headers
+        printf 'builduser ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
+        chown -R builduser:builduser /build
+
+        for i in */; do
+        cd $i
+        sudo -u builduser bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'
+        done
+
+        cp */*.pkg.tar.* ./
+        repo-add ./${{github.repository_owner}}-t2.db.tar.gz ./*.pkg.tar.*
+
+        EOF
+        cat entrypoint.sh
+        docker run -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
+        ls -l .
+        
+    - name: generate tag
+      id: tag
+      run: |
+        count=$(git rev-list --count HEAD)
+        hash=$(git rev-parse --short HEAD)
+        echo "::set-output name=tag::r${count}.${hash}"
+        
+    - name: Print sha512sums
+      run: sha512sum */*.pkg.tar.*
+
+    - name: Upload Packages Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: t2-packages-${{ steps.tag.outputs.tag }}
+        path: |
+          ${{ github.workspace }}/*.pkg.tar.*
+          ${{ github.workspace }}/*-t2.files*
+          ${{ github.workspace }}/*-t2.db*
+
+#    - name: Release
+#      if: ${{ github.ref == 'refs/heads/main' && "!contains(github.event.head_commit.message, '[no rel]')" }}
+#      uses: softprops/action-gh-release@v1
+#      with:
+#        files: |
+#          ${{ github.workspace }}/*.pkg.tar.*
+#          ${{ github.workspace }}/*-t2.files*
+#          ${{ github.workspace }}/*-t2.db*
+#        tag_name: ${{ steps.tag.outputs.tag }}
+#        draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
+#        prerelease: ${{ contains(github.event.head_commit.message, '[pre]') }}
+#        generate_release_notes: true
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
