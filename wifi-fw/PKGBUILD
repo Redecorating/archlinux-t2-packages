@@ -5,19 +5,20 @@
 
 # Maintainer: Your Name <youremail@domain.com>
 pkgname=apple-bcm-wifi-firmware
-pkgver=12.0.0
-pkgrel=1
+pkgver=11.0.0
+pkgrel=2
 pkgdesc="WiFi Firmware for T2 and M1 Macs"
 arch=("any")
 url=""
 license=('unknown')
 makedepends=("python3" "tar")
-source=("firmware-source.tar"
-        "asahi-installer::git+https://github.com/AsahiLinux/asahi-installer#commit=9db938d8a20f67d7a3791cd5eea1266f8325acac")
-sha256sums=('SKIP'
+source=("https://github.com/AdityaGarg8/macOS-Big-Sur-WiFi-Firmware/archive/222a7fe699a7b6f5f4cfc32b7bfc17ab26dfb8c0.tar.gz"
+        "asahi-installer::git+https://github.com/AsahiLinux/asahi-installer#commit=b5d4e49a57fb1538fa5db0934cac113136a08fbb")
+sha256sums=('542776d5a63b8b994aefa3937d20184ce37bedc6377a3bf287c8824a5d36d5c8'
             'SKIP')
 
 build() {
+	mv macOS-Big-Sur-WiFi-Firmware-222a7fe699a7b6f5f4cfc32b7bfc17ab26dfb8c0/* ./
 	cd asahi-installer/src
 	python3 -m firmware.wifi ../.. ../../firmware.tar
 }

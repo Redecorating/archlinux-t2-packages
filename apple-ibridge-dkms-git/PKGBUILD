@@ -12,7 +12,7 @@ url="https://github.com/t2linux/apple-ib-drv"
 license=('GPL2')
 
 depends=('linux')
-makedepends=('git' 'linux-headers')
+makedepends=('git' 'linux-headers' 'pahole')
 options=(!strip)
 
 source=("apple-ibridge::git+https://github.com/t2linux/apple-ib-drv.git#branch=mbp15"
