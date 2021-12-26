@@ -36,6 +36,10 @@ jobs:
         cp */*.pkg.tar.* ./
         repo-add ./${{github.repository_owner}}-t2.db.tar.gz ./*.pkg.tar.*
 
+        for i in \$(find -type l); do
+        cp --remove-destination \$(readlink \$i) \$i
+        done
+
         EOF
         cat entrypoint.sh
         docker run -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
