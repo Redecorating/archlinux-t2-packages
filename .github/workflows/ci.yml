@@ -36,7 +36,7 @@ jobs:
         cp */*.pkg.tar.* ./
         repo-add ./${{github.repository_owner}}-t2.db.tar.gz ./*.pkg.tar.*
 
-        for i in \$(find -type l); do
+        for i in *.db *.files; do
         cp --remove-destination \$(readlink \$i) \$i
         done
 
