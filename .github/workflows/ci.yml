@@ -26,7 +26,7 @@ jobs:
         printf 'builduser ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
         chown -R builduser:builduser /build
 
-        for i in ./*/; do
+        for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
         cd \$i
         pwd
         sudo -u builduser bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'
