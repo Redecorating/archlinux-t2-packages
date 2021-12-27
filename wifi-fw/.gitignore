@@ -3,3 +3,6 @@ pkg/
 *.pkg.tar.*
 *.zstd
 asahi-installer/
+OSX-KVM*
+*.zip
+firmware-source.tar
