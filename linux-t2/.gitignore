@@ -1,7 +1,0 @@
-src/
-pkg/
-apple-bce/
-apple-ibridge/
-*.tar.xz
-*.tar.sign
-*.pkg.tar.*

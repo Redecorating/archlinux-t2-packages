@@ -1,0 +1,3 @@
+[submodule "linux-t2"]
+	path = linux-t2
+	url = https://github.com/Redecorating/mbp-16.1-linux-wifi
