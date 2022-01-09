@@ -19,7 +19,7 @@ jobs:
         curl -o key.asc https://dl.t2linux.org/archlinux/key.asc
         pacman-key --add key.asc
         pacman-key --lsign 7F9B8FC29F78B339
-        pacman -Syu --noconfirm --needed sudo base-devel linux-mbp linux-mbp-headers
+        pacman -Syu --noconfirm --needed sudo git base-devel linux-mbp linux-mbp-headers
         useradd builduser -m
         sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
         passwd -d builduser
