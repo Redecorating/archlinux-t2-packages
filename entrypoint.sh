@@ -2,9 +2,11 @@
 set -e
 cd /build
 
-repo_full=$GITHUB_REPOSITORY
+repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
+
+echo ${repo_full} ${repo_owner}
 
 echo '[mbp]
 Server = https://dl.t2linux.org/archlinux/\$repo/\$arch' >> /etc/pacman.conf

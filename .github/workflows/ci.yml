@@ -10,6 +10,7 @@ jobs:
         fetch-depth: '0'
     - name: Build packages
       run: |
+        echo $GITHUB_REPOSITORY > ./repo
         docker run -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
         ls -l .
         
