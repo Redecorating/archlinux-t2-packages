@@ -27,7 +27,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
 	cd $i
 	for i in $(sudo -u builduser makepkg --packagelist); do
 		package=$(basename $i)
-		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$i \
+		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$package \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
 	done
 	sudo -u builduser bash -c 'export MAKEFLAGS=j$(nproc) && makepkg -s --noconfirm'||status=$?
