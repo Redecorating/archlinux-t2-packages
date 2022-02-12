@@ -2,6 +2,11 @@
 set -e
 cd /build
 
+echo WARN: foo
+echo Warn: foo
+echo Warning: foo
+echo WARNING: foo
+
 repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
@@ -43,6 +48,6 @@ cp */*.pkg.tar.* ./
 repo-add ./$repo_owner-t2.db.tar.gz ./*.pkg.tar.*
 
 for i in *.db *.files; do
-cp --remove-destination \$(readlink \$i) \$i
+cp --remove-destination $(readlink $i) $i
 done
 
