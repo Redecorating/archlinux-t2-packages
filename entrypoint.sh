@@ -23,7 +23,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
 	status=0
 	git submodule update --init $i
 	cd $i
-	for i in $(makepkg --packagelist); do
+	for i in $(sudo -u builduser makepkg --packagelist); do
 		package=$(basename $i)
 		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$i \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
