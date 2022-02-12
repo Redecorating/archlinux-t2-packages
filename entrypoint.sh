@@ -21,7 +21,7 @@ printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
 
 for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
-	status=0
+	status=13
 	git submodule update --init $i
 	cd $i
 	for i in $(sudo -u builduser makepkg --packagelist); do
