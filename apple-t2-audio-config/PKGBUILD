@@ -8,16 +8,17 @@
 _pkgbase=('apple-t2-audio-config')
 pkgname=(${_pkgbase}-alt ${_pkgbase})
 pkgver=0.1
-pkgrel=4
+pkgrel=5
 pkgdesc="System configuration files for the apple-bce audio driver"
 arch=('any')
 url="https://gist.github.com/MCMrARM/c357291e4e5c18894bea10665dcebffb"
 license=('unknown')
 makedepends=()
 checkdepends=()
-depends=(apple-bce)
+depends=()
 optdepends=(
-  linux-mbp
+  linux-t2
+  apple-bce
   pulseaudio
   pipewire
 )
