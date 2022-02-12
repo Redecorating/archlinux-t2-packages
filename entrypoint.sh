@@ -2,6 +2,7 @@
 set -e
 cd /build
 
+cat ./repo
 repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
@@ -16,7 +17,7 @@ pacman -Syu --noconfirm --needed sudo git base-devel linux-mbp linux-mbp-headers
 useradd builduser -m
 sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
 passwd -d builduser
-printf 'builduser ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
+printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
 
 for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
@@ -28,7 +29,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
 		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$i \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
 	done
-	sudo -u builduser bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'||status=$?
+	sudo -u builduser bash -c 'export MAKEFLAGS=j$(nproc) && makepkg -s --noconfirm'||status=$?
 
 	# Package already built is fine.
 	if [ $status != 13 ]; then

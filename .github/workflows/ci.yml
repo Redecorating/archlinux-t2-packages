@@ -11,6 +11,7 @@ jobs:
     - name: Build packages
       run: |
         echo ${{ github.GITHUB_REPOSITORY }} > ./repo
+        cat ./repo
         docker run -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
         ls -l .
         
