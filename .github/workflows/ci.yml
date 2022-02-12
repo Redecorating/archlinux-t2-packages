@@ -10,39 +10,7 @@ jobs:
         fetch-depth: '0'
     - name: Build packages
       run: |
-        cat << EOF > entrypoint.sh
-        set -e
-        cd /build
-        echo '[mbp]
-        Server = https://dl.t2linux.org/archlinux/\$repo/\$arch' >> /etc/pacman.conf
-        pacman-key --init
-        curl -o key.asc https://dl.t2linux.org/archlinux/key.asc
-        pacman-key --add key.asc
-        pacman-key --lsign 7F9B8FC29F78B339
-        pacman -Syu --noconfirm --needed sudo git base-devel linux-mbp linux-mbp-headers
-        useradd builduser -m
-        sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
-        passwd -d builduser
-        printf 'builduser ALL=(ALL) ALL\\n' | tee -a /etc/sudoers
-        chown -R builduser:builduser /build
-
-        for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2; do
-        git submodule update --init $i
-        cd \$i
-        pwd
-        sudo -u builduser bash -c 'export MAKEFLAGS=j\$(nproc) && makepkg -s --noconfirm'
-        cd ..
-        done
-
-        cp */*.pkg.tar.* ./
-        repo-add ./${{github.repository_owner}}-t2.db.tar.gz ./*.pkg.tar.*
-
-        for i in *.db *.files; do
-        cp --remove-destination \$(readlink \$i) \$i
-        done
-
-        EOF
-        cat entrypoint.sh
+        echo ${{ github.GITHUB_REPOSITORY }} > ./repo
         docker run -t -v $PWD:/build archlinux /bin/bash /build/entrypoint.sh
         ls -l .
         
