@@ -1,3 +1,9 @@
 [submodule "linux-t2"]
 	path = linux-t2
 	url = https://github.com/Redecorating/mbp-16.1-linux-wifi
+[submodule "apple-bce-dkms-git"]
+	path = apple-bce-dkms-git
+	url = https://github.com/aunali1/apple-bce-arch
+[submodule "gpu-switch"]
+	path = gpu-switch
+	url = https://aur.archlinux.org/gpu-switch.git
