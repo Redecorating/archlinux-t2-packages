@@ -2,20 +2,19 @@
 
 _pkgbase=('apple-ibridge')
 pkgname=(${_pkgbase}-git ${_pkgbase}-dkms-git)
-pkgdesc="Apple ibridge (touchbar) driver for T2-based devices."
-# number of commits & latest commit hash
-pkgver=r306.d8411ad
+pkgdesc="Apple ibridge (touchbar) driver for T2-based devices + Keyboard Backlight on MBP16,x"
+pkgver=r307.467df9b
 pkgrel=1
 
 arch=('x86_64')
-url="https://github.com/t2linux/apple-ib-drv"
+url="https://github.com/Redecorating/apple-ib-drv"
 license=('GPL2')
 
 depends=('linux')
 makedepends=('git' 'linux-headers' 'pahole')
 options=(!strip)
 
-source=("apple-ibridge::git+https://github.com/t2linux/apple-ib-drv.git#branch=mbp15"
+source=("apple-ibridge::git+https://github.com/Redecorating/apple-ib-drv.git#branch=mbp15"
 	"dkms.conf.in"
 	"rm-apple-ib-tb.sh")
 
