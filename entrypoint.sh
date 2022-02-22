@@ -22,7 +22,7 @@ passwd -d builduser
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
 
-cat ./gpg_key | base64 --decode | sudo -u builduser gpg --import
+cat ./gpg_key | base64 --decode | gpg --homedir /home/builduser/.gnupg --import
 rm ./gpg_key
 
 for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-git gpu-switch; do
