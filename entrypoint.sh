@@ -2,9 +2,6 @@
 set -e
 cd /build
 
-sh -c ">&2 echo test"
-
-
 repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
@@ -31,7 +28,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-
 	cd $i
 	for i in $(sudo -u builduser makepkg --packagelist); do
 		package=$(basename $i)
-		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$package \
+		wget https://github.com/$repo_owner/$repo_name/releases/download/packages/$package \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
 	done
 	sudo -u builduser bash -c 'export MAKEFLAGS=j$(nproc) && makepkg --sign -s --noconfirm'||status=$?

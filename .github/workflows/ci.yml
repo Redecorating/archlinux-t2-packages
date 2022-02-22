@@ -46,7 +46,7 @@ jobs:
           ${{ github.workspace }}/*.pkg.tar.*
           ${{ github.workspace }}/*-t2.files*
           ${{ github.workspace }}/*-t2.db*
-        tag_name: repo #${{ steps.tag.outputs.tag }}
+        tag_name: packages #${{ steps.tag.outputs.tag }}
           #draft: ${{ contains(github.event.head_commit.message, '[draft]') }}
           #prerelease: ${{ contains(github.event.head_commit.message, '[pre]') }}
           #generate_release_notes: true
