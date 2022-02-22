@@ -22,7 +22,7 @@ chown -R builduser:builduser /build
 cat ./gpg_key | base64 --decode | gpg --homedir /home/builduser/.gnupg --import
 rm ./gpg_key
 
-for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-git gpu-switch; do
+for i in apple-t2-audio-config  linux-t2 gpu-switch; do # apple-ibridge-dkms-git apple-bce-dkms-git
 	status=13
 	git submodule update --init $i
 	cd $i
