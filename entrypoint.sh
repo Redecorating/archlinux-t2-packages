@@ -2,6 +2,9 @@
 set -e
 cd /build
 
+sh -c ">&2 echo test"
+
+
 repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
@@ -19,6 +22,9 @@ passwd -d builduser
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
 
+cat ./gpg_key | base64 --decode | sudo -u builduser gpg --import
+rm ./gpg_key
+
 for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-git gpu-switch; do
 	status=13
 	git submodule update --init $i
@@ -28,7 +34,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-
 		wget https://github.com/$repo_owner/$repo_name/releases/download/repo/$package \
 			&& echo "Warning: $package already built, did you forget to bump the pkgver and/or pkgrel? It will not be rebuilt."
 	done
-	sudo -u builduser bash -c 'export MAKEFLAGS=j$(nproc) && makepkg -s --noconfirm'||status=$?
+	sudo -u builduser bash -c 'export MAKEFLAGS=j$(nproc) && makepkg --sign -s --noconfirm'||status=$?
 
 	# Package already built is fine.
 	if [ $status != 13 ]; then
@@ -38,7 +44,7 @@ for i in apple-ibridge-dkms-git  apple-t2-audio-config  linux-t2 apple-bce-dkms-
 done
 
 cp */*.pkg.tar.* ./
-repo-add ./$repo_owner-t2.db.tar.gz ./*.pkg.tar.*
+repo-add --sign ./$repo_owner-t2.db.tar.gz ./*.pkg.tar.*
 
 for i in *.db *.files; do
 cp --remove-destination $(readlink $i) $i
