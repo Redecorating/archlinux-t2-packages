@@ -41,7 +41,7 @@ for i in apple-t2-audio-config  linux-t2 gpu-switch; do # apple-ibridge-dkms-git
 done
 
 cp */*.pkg.tar.* ./
-repo-add --sign ./$repo_owner-t2.db.tar.gz ./*.pkg.tar.*
+repo-add --sign ./$repo_owner-t2.db.tar.gz ./*.pkg.tar.zst
 
 for i in *.db *.files; do
 cp --remove-destination $(readlink $i) $i
