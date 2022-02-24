@@ -6,15 +6,12 @@ repo_full=$(cat ./repo)
 repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
 
-echo '[mbp]
-Server = https://dl.t2linux.org/archlinux/\$repo/\$arch' >> /etc/pacman.conf
 pacman-key --init
-curl -o key.asc https://dl.t2linux.org/archlinux/key.asc
-pacman-key --add key.asc
-pacman-key --lsign 7F9B8FC29F78B339
-pacman -Syu --noconfirm --needed sudo git base-devel linux-mbp linux-mbp-headers wget
+sudo pacman-key --recv-keys DEB7F121BAAA6F4E --keyserver pgp.mit.edu
+sudo pacman-key --lsign-key DEB7F121BAAA6F4E
+pacman -Syu --noconfirm --needed sudo git base-devel wget
 useradd builduser -m
-sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
+sudo -u builduser gpg --keyserver pgp.mit.edu --recv-keys 38DBBDC86092693E
 passwd -d builduser
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
@@ -22,7 +19,7 @@ chown -R builduser:builduser /build
 cat ./gpg_key | base64 --decode | gpg --homedir /home/builduser/.gnupg --import
 rm ./gpg_key
 
-for i in apple-t2-audio-config  linux-t2 gpu-switch; do # apple-ibridge-dkms-git apple-bce-dkms-git
+for i in apple-t2-audio-config apple-ibridge-dkms-git linux-t2 gpu-switch; do # apple-bce-dkms-git needs old gcc to build
 	status=13
 	git submodule update --init $i
 	cd $i

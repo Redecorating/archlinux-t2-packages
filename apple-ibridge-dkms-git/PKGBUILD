@@ -1,7 +1,7 @@
 # Copied from https://github.com/aunali1/apple-bce-arch/blob/master/PKGBUILD but this one is for apple-ibridge
 
 _pkgbase=('apple-ibridge')
-pkgname=(${_pkgbase}-git ${_pkgbase}-dkms-git)
+pkgname=${_pkgbase}-dkms-git
 pkgdesc="Apple ibridge (touchbar) driver for T2-based devices + Keyboard Backlight on MBP16,x"
 pkgver=r307.467df9b
 pkgrel=1
@@ -10,8 +10,9 @@ arch=('x86_64')
 url="https://github.com/Redecorating/apple-ib-drv"
 license=('GPL2')
 
-depends=('linux')
+depends=('linux' 'dkms')
 makedepends=('git' 'linux-headers' 'pahole')
+provides=("${_pkgbase}")
 options=(!strip)
 
 source=("apple-ibridge::git+https://github.com/Redecorating/apple-ib-drv.git#branch=mbp15"
@@ -36,37 +37,11 @@ prepare() {
 	    -e "s/@_PKGBASE@/$_pkgbase/" dkms.conf.in > dkms.conf
 }
 
-build() {
-	cd "$_pkgbase"
-	_kernver=$(</usr/src/linux-mbp/version)
-	make KVERSION=${_kernver}
-}
-
-package_apple-ibridge-git() {
-	depends=('linux-mbp' 'linux-mbp-headers')
-
-	_kernver=$(</usr/src/linux-mbp/version)
-	_extramodules="/usr/lib/modules/${_kernver}/extramodules"
-
-	install -Dm744 rm-apple-ib-tb.sh "${pkgdir}"/usr/lib/systemd/system-sleep/rm-apple-ib-tb.sh
-
-	cd "$_pkgbase"
-	install -Dt "${pkgdir}${_extramodules}" -m644 *.ko
-	find "${pkgdir}" -name '*.ko' -exec xz {} +
-}
-
-package_apple-ibridge-dkms-git() {
-	depends=('dkms')
-	conflicts=("${_pkgbase}")
-	provides=("${_pkgbase}")
-
+package() {
 	install -Dm644 dkms.conf "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
 	install -Dm744 rm-apple-ib-tb.sh "${pkgdir}"/usr/lib/systemd/system-sleep/rm-apple-ib-tb.sh
 	
 	cd "$_pkgbase"
-
-	# XXX: Find a better solution...
-	make KVERSION=$(</usr/src/linux-mbp/version) clean
 
 	cp -dr --no-preserve='ownership' ./* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
 }
