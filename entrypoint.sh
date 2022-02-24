@@ -7,8 +7,6 @@ repo_owner=$(echo $repo_full | cut -d/ -f1)
 repo_name=$(echo $repo_full | cut -d/ -f2)
 
 pacman-key --init
-sudo pacman-key --recv-keys DEB7F121BAAA6F4E --keyserver pgp.mit.edu
-sudo pacman-key --lsign-key DEB7F121BAAA6F4E
 pacman -Syu --noconfirm --needed sudo git base-devel wget
 useradd builduser -m
 sudo -u builduser gpg --keyserver pgp.mit.edu --recv-keys 38DBBDC86092693E
