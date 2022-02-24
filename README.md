@@ -2,11 +2,11 @@
 
 Some packages useful for T2 Macs.
 
-The "repo" release will be updated by the ci, so that it can be used as a pacman repo:
+The "packages" release will be updated by the ci, so that it can be used as a pacman repo, you might have to add my signing key. Pacman will prompt you to add key `DEB7F121BAAA6F4E, "Unkown Packager"`:
 ```
 [Redecorating-t2]
-Server = https://github.com/Redecorating/archlinux-t2-packages/releases/download/repo
-SigLevel = Optional TrustAll
+Server = https://github.com/Redecorating/archlinux-t2-packages/releases/download/packages
+SigLevel = Required DatabaseOptional
 ```
 
 - apple-bce-dkms-git: Exposes Keyboard, Camera, Touchbar, etc as USB devices. Also does audio.
