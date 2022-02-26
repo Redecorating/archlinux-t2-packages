@@ -2,7 +2,7 @@
 
 Some packages useful for T2 Macs.
 
-The "packages" release will be updated by the CI, so that it can be used as a pacman repo.
+The "packages" release will be updated by the CI, so that it can be used as a `pacman` repo.
 
 Add this to the end of `/etc/pacman.conf`
 
@@ -11,14 +11,13 @@ Add this to the end of `/etc/pacman.conf`
 Server = https://github.com/Redecorating/archlinux-t2-packages/releases/download/packages
 ```
 
-Then add the key that the CI uses to sign the packages (this key is stored in GitHub secrets):
+When you try to install a package from this, `pacman` will prompt you to add the key that the CI uses to sign the packages (this key is stored in GitHub secrets). The key id will be "DEB7F121BAAA6F4E":
 
-```sh
-sudo pacman-key --recv-keys DEB7F121BAAA6F4E --keyserver pgp.mit.edu
-sudo pacman-key --lsign-key DEB7F121BAAA6F4E
+```
+:: Import PGP key DEB7F121BAAA6F4E, "Unknown Packager"? [Y/n] y
 ```
 
-Then you should be able to install and update packages with pacman.
+Then you should be able to install and update packages with `pacman`.
 
 - apple-bce-dkms-git: Exposes Keyboard, Camera, Touchbar, etc as USB devices. Also does audio.
 - apple-ibridge-dkms-git: Touchbar driver, keyboard backlight on mbp16,X (ones where touchbar does not have esc key in it)
