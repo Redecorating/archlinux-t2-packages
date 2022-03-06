@@ -9,7 +9,7 @@ repo_name=$(echo $repo_full | cut -d/ -f2)
 pacman-key --init
 pacman -Syu --noconfirm --needed sudo git base-devel wget
 useradd builduser -m
-sudo -u builduser gpg --keyserver pgp.mit.edu --recv-keys 38DBBDC86092693E
+sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
 passwd -d builduser
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown -R builduser:builduser /build
