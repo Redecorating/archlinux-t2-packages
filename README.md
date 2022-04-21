@@ -25,3 +25,14 @@ Then you should be able to install and update packages with `pacman`.
 - gpu-switch: just the aur package, for use on 15-16" MBPs with https://wiki.t2linux.org/guides/hybrid-graphics/
 - linux-t2: kernel with patches for T2 support and apple-bce + apple-ibridge included (you don't need the dkms versions of these for this kernel.)
 - wifi-fw: not on the releases, see [here](./wifi-fw/README.md)
+
+## Troubleshooting
+
+- If pacman doesn't prompt you for the key, try manually installing it:
+```
+sudo pacman-key --recv-keys DEB6F121BAAA6F4E
+```
+- If you get an `unknown trust` issue, try signing the key manually:
+```
+sudo pacman-key --lsign-key DEB6F121BAAA6F4E
+``` 
