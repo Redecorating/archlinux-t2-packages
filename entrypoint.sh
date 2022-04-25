@@ -10,6 +10,7 @@ pacman-key --init
 pacman -Syu --noconfirm --needed sudo git base-devel wget
 useradd builduser -m
 chown -R builduser:builduser /build
+git config --global --add safe.directory /build
 sudo -u builduser gpg --keyserver keyserver.ubuntu.com --recv-keys 38DBBDC86092693E
 passwd -d builduser
 printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers
