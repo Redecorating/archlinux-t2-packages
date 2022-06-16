@@ -30,9 +30,9 @@ Then you should be able to install and update packages with `pacman`.
 
 - If pacman doesn't prompt you for the key, try manually installing it:
 ```
-sudo pacman-key --recv-keys DEB6F121BAAA6F4E
+sudo pacman-key --recv-keys DEB7F121BAAA6F4E
 ```
 - If you get an `unknown trust` issue, try signing the key manually:
 ```
-sudo pacman-key --lsign-key DEB6F121BAAA6F4E
+sudo pacman-key --lsign-key DEB7F121BAAA6F4E
 ``` 
