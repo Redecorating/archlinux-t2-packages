@@ -4,7 +4,7 @@ _pkgbase=('apple-ibridge')
 pkgname=${_pkgbase}-dkms-git
 pkgdesc="Apple ibridge (touchbar) driver for T2-based devices + Keyboard Backlight on MBP16,x"
 pkgver=r307.467df9b
-pkgrel=1
+pkgrel=2
 
 arch=('x86_64')
 url="https://github.com/Redecorating/apple-ib-drv"
