@@ -21,7 +21,7 @@ source=("apple-ibridge::git+https://github.com/Redecorating/apple-ib-drv.git#bra
 
 sha256sums=('SKIP'
             'ae3dfeba1fcb569fb73b4c436dcf269b35340ec8c3d848b8f1cda5783e198faf'
-            '702b49632abff52b9a880a401d4ff4d095595fc47ff62dd0fe3f199a2a8dfa16')
+            '8ce4b628e019411ea32935c0b8d376ac67348f23f013c39042b8589e0c9920d4')
 
 pkgver() {
 	cd "$_pkgbase"
