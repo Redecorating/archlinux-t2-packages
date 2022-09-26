@@ -6,11 +6,12 @@
 # Maintainer: Your Name <youremail@domain.com>
 pkgname=apple-t2-audio-config
 pkgver=0.3
-pkgrel=1
+pkgrel=2
 pkgdesc="System configuration files for the apple-bce audio driver"
 arch=('any')
 url="https://github.com/kekrby/t2-better-audio"
 license=('MIT')
+makedepends=(git)
 replaces=(apple-t2-audio-config-alt)
 optdepends=(
   'linux-t2: for audio kernel module'
@@ -25,13 +26,13 @@ source=(
 sha256sums=('SKIP')
 
 package() {
-	for dir in '/usr/share/alsa-card-profile/mixer/' '$pkgdir/usr/share/pulseaudio/alsa-mixer/'
+	for dir in '/usr/share/alsa-card-profile/mixer/' '/usr/share/pulseaudio/alsa-mixer/'
 	do
-		mkdir -p $pkgdir$dir
-		cp -r $srcdir/audio/files/{profile-sets,paths} $pkgdir$dir
+		mkdir -pv $pkgdir$dir
+		cp -rv $srcdir/audio/files/{profile-sets,paths} $pkgdir$dir
 	done
-	mkdir -p $pkgdir/usr/lib/udev/rules.d
-	cp -rv $srcdir/audio/files/91-audio-custom.rules $pkgdir/usr/lib/udev/rules.d/91-apple-t2-audio.rules
+	mkdir -pv $pkgdir/usr/lib/udev/rules.d
+	cp -rv $srcdir/audio/files/91-audio-custom.rules $pkgdir/usr/lib/udev/rules.d/92-apple-t2-audio.rules
 }
 
 
