@@ -1,0 +1,20 @@
+# Maintainer: Redecorating
+
+pkgname=base-t2
+pkgver=1
+pkgrel=1
+pkgdesc='Minimal package set to define a basic Arch Linux installation on a T2 Mac'
+url='https://t2linux.org'
+arch=('any')
+license=('GPL')
+depends=(
+  # Normal Base
+  'base'
+
+  # T2 Support
+  'linux-t2' 'apple-t2-audio-config'
+)
+optdepends=('apple-bcm-wifi-firmware: Proprietary Firmware needed for WiFi' #There's certainly a better way to word this
+  't2-model-specific-support: Any extra packages needed for specific models')
+
+# vim: ts=2 sw=2 et:

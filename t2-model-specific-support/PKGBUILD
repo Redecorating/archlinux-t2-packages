@@ -1,0 +1,91 @@
+# This is an example of a PKGBUILD for splitting packages. Use this as a
+# start to creating your own, and remove these comments. For more information,
+# see 'man PKGBUILD'. NOTE: Please fill out the license field for your package!
+# If it is unknown, then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+
+models=(
+  'MacBookPro15,1'
+  'MacBookPro15,2'
+  'MacBookPro15,3'
+  'MacBookPro15,4'
+  'MacBookPro16,1'
+  'MacBookPro16,2'
+  'MacBookPro16,3'
+  'MacBookPro16,4'
+  'MacBookAir8,1'
+  'MacBookAir8,2'
+  'MacBookAir9,1'
+  'Macmini8,1'
+  'iMac20,1'
+  'iMac20,2'
+  'iMacPro1,1'
+  'MacPro7,1'
+)
+pkgname=()
+for model in ${models[@]}; do
+  pkgname+=($(echo $model | tr -d ,))
+done;
+pkgbase='t2-hwsupport'
+pkgver=1
+pkgrel=1
+arch=(any)
+url="https://t2linux.org"
+license=('GPL')
+provides=('t2-model-specific-support')
+
+package_MacBookPro151() {
+  pkgdesc="Any extra packages needed for the MacBookPro15,1"
+  optdepends=('gpu-switch: Set the boot gpu, if you boot to iGPU you can save power.')
+} 
+package_MacBookPro152() {
+  pkgdesc="Any extra packages needed for the MacBookPro15,2"
+} 
+package_MacBookPro153() {
+  pkgdesc="Any extra packages needed for the MacBookPro15,3"
+  optdepends=('gpu-switch: Set the boot gpu, if you boot to iGPU you can save power.')
+} 
+package_MacBookPro154() {
+  pkgdesc="Any extra packages needed for the MacBookPro15,4"
+} 
+package_MacBookPro161() {
+  pkgdesc="Any extra packages needed for the MacBookPro16,1"
+  optdepends=('gpu-switch: Set the boot gpu, if you boot to iGPU you can save power.')
+} 
+package_MacBookPro162() {
+  pkgdesc="Any extra packages needed for the MacBookPro16,2"
+} 
+package_MacBookPro163() {
+  pkgdesc="Any extra packages needed for the MacBookPro16,3"
+} 
+package_MacBookPro164() {
+  pkgdesc="Any extra packages needed for the MacBookPro16,4"
+  optdepends=('gpu-switch: Set the boot gpu, if you boot to iGPU you can save power.')
+} 
+package_MacBookAir81() {
+  pkgdesc="Any extra packages needed for the MacBookAir8,1"
+} 
+package_MacBookAir82() {
+  pkgdesc="Any extra packages needed for the MacBookAir8,2"
+} 
+package_MacBookAir91() {
+  pkgdesc="Any extra packages needed for the MacBookAir9,1"
+} 
+package_Macmini81() {
+  pkgdesc="Any extra packages needed for the Macmini8,1"
+} 
+package_iMac201() {
+  pkgdesc="Any extra packages needed for the iMac20,1"
+} 
+package_iMac202() {
+  pkgdesc="Any extra packages needed for the iMac20,2"
+} 
+package_iMacPro11() {
+  pkgdesc="Any extra packages needed for the iMacPro1,1"
+} 
+package_MacPro71() {
+  pkgdesc="Any extra packages needed for the MacPro7,1"
+} 
+
+# vim: ts=2 sw=2 et:
