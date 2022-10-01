@@ -1,0 +1,42 @@
+_pkgbase=('apple-gmux-t2')
+pkgname=${_pkgbase}-dkms-git
+pkgdesc="Work in progress version of apple-gmux for T2 MacBookPro's"
+pkgver=r1.07adb7e
+pkgrel=1
+
+arch=('x86_64')
+url="https://github.com/Redecorating/apple-gmux-t2"
+license=('GPL2')
+
+depends=('linux' 'dkms')
+makedepends=('git' 'linux-headers' 'pahole')
+provides=("${_pkgbase}")
+options=(!strip)
+
+source=("apple-gmux-t2::git+https://github.com/Redecorating/apple-gmux-t2.git#branch=main"
+	"dkms.conf.in")
+
+sha256sums=('SKIP'
+            'ae3dfeba1fcb569fb73b4c436dcf269b35340ec8c3d848b8f1cda5783e198faf')
+
+pkgver() {
+	cd "$_pkgbase"
+	( set -o pipefail
+	  git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+	  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
+}
+
+prepare() {
+	# Set name and version
+	sed -e "s/@PKGVER@/$pkgver/" \
+	    -e "s/@_PKGBASE@/$_pkgbase/" dkms.conf.in > dkms.conf
+}
+
+package() {
+	install -Dm644 dkms.conf "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/dkms.conf
+	
+	cd "$_pkgbase"
+
+	cp -dr --no-preserve='ownership' ./* "${pkgdir}"/usr/src/${_pkgbase}-${pkgver}/
+}
