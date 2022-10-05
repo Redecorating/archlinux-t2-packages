@@ -4,29 +4,34 @@
 # then please put 'unknown'.
 
 # Maintainer: Your Name <youremail@domain.com>
-pkgname=apple-bcm-wifi-firmware
+pkgname=apple-bcm-wifi-bt-firmware
+# Set $pkgver to the macOS version you got the firmware from.
 pkgver=12.0.0
 pkgrel=1
 pkgdesc="WiFi Firmware for T2 and M1 Macs"
 arch=("any")
 url=""
 license=('unknown')
-makedepends=("python3" "tar")
+replaces=('apple-bcm-wifi-firmware')
+makedepends=("python3" "tar" "git")
 # You provide firmware-source.tar, either from your macOS installation, or
 # with the `get-fw.sh` script in this directory.
 source=("firmware-source.tar"
-        "asahi-installer::git+https://github.com/AsahiLinux/asahi-installer#commit=b5d4e49a57fb1538fa5db0934cac113136a08fbb")
+        "asahi-installer::git+https://github.com/AsahiLinux/asahi-installer#commit=d08345d94194dc810319172871a9ba06f77da9bd"
+        "t2.py")
 sha256sums=('SKIP'
-            'SKIP')
+            'SKIP'
+            'b3cf25196ccfc7836417b19423a0602d2290a2cf67f195351856008d1a71fc87')
 
 build() {
-	cd asahi-installer/src
-	python3 -m firmware.wifi ../.. ../../firmware.tar
+	cp t2.py asahi-installer/
+	cd asahi-installer
+	python3 t2.py ..
 }
 
 
 package() {
 	mkdir -p $pkgdir/usr/lib/firmware
 	cd $pkgdir/usr/lib/firmware
-	tar xf $srcdir/firmware.tar
+	tar xf $srcdir/asahi-installer/firmware.tar
 }

@@ -24,7 +24,7 @@ Then you should be able to install and update packages with `pacman`.
 - apple-t2-audio-config: audio config files for the audio device apple-bce has. 16" MBPs need the "-alt" one, MBA9,1 probably won't work, see [here](https://wiki.t2linux.org/guides/audio-config/) for that one.
 - gpu-switch: just the aur package, for use on 15-16" MBPs with https://wiki.t2linux.org/guides/hybrid-graphics/
 - linux-t2: kernel with patches for T2 support and apple-bce + apple-ibridge included (you don't need the dkms versions of these for this kernel.)
-- wifi-fw: not on the releases, see [here](./wifi-fw/README.md)
+- wifi+bt-fw: not on the releases, see [here](./wifi-fw/README.md)
 
 ## Troubleshooting
 
