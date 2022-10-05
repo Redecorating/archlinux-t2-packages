@@ -1,7 +1,7 @@
 _pkgbase=('apple-gmux-t2')
 pkgname=${_pkgbase}-dkms-git
 pkgdesc="Work in progress version of apple-gmux for T2 MacBookPro's"
-pkgver=r1.07adb7e
+pkgver=r4.c4b9071
 pkgrel=1
 
 arch=('x86_64')
@@ -13,7 +13,7 @@ makedepends=('git' 'linux-headers' 'pahole')
 provides=("${_pkgbase}")
 options=(!strip)
 
-source=("apple-gmux-t2::git+https://github.com/Redecorating/apple-gmux-t2.git#branch=main"
+source=("apple-gmux-t2::git+https://github.com/Redecorating/apple-gmux-t2.git#commit=c4b9071345f4e053b0727976cdd2ad5986acf069"
 	"dkms.conf.in")
 
 sha256sums=('SKIP'
