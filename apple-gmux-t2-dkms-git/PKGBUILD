@@ -1,7 +1,7 @@
 _pkgbase=('apple-gmux-t2')
 pkgname=${_pkgbase}-dkms-git
 pkgdesc="Work in progress version of apple-gmux for T2 MacBookPro's"
-pkgver=r4.c4b9071
+pkgver=r11.712c9d0
 pkgrel=1
 
 arch=('x86_64')
