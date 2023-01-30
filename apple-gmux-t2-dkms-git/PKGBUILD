@@ -13,7 +13,7 @@ makedepends=('git' 'linux-headers' 'pahole')
 provides=("${_pkgbase}")
 options=(!strip)
 
-source=("apple-gmux-t2::git+https://github.com/Redecorating/apple-gmux-t2.git#commit=c4b9071345f4e053b0727976cdd2ad5986acf069"
+source=("apple-gmux-t2::git+https://github.com/Redecorating/apple-gmux-t2.git#commit=712c9d00a9bfca524d073a5f7581d1c5e99c0d47"
 	"dkms.conf.in")
 
 sha256sums=('SKIP'
