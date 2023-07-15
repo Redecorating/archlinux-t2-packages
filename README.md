@@ -1,3 +1,12 @@
+
+
+This repository is no longer being updated. The following repository can be used instead:
+
+```
+[arch-mact2]
+Server = https://mirror.funami.tech/arch-mact2/os/x86_64
+SigLevel = Never
+```
 # archlinux-t2-packages
 
 Some packages useful for T2 Macs.
